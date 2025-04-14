@@ -1,7 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tabela Fixa</title>
+    <title>Tabela de Cachaças</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #ff0000;
+        }
+        #tabela {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #tabela th, #tabela td {
+            padding: 10px;
+            text-align: left;
+        }
+        #tabela th {
+            background-color:  #ff0000;
+            color: white;
+        }
+        #tabela tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        #tabela tr:hover {
+            background-color: #ddd;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
     <div id="app"></div>
@@ -11,24 +57,63 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     
     <script type="text/babel">
-        const tabela = (
-            <table id="tabela" border="1">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Marca</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Havana</td>
-                        <td>Engenho Anísio Santiago</td>
-                    </tr>
-                </tbody>
-            </table>
-        );
+        // Função que retorna o cabeçalho
+        function Cabecalho() {
+            return <h1>Minha tabela de cachaças</h1>;
+        }
 
-        ReactDOM.createRoot(document.getElementById("app")).render(tabela);
+        // Array de objetos JSON com informações das cachaças
+        const cachaças = [
+            { nome: "Havana", marca: "Engenho Anísio Santiago" },
+            { nome: "Vale Verde", marca: "Vale Verde Alambique" },
+            { nome: "Salinas", marca: "Indústria de Bebidas Salinas" },
+        ];
+
+        // Função que renderiza a tabela com base nos objetos JSON
+        function TabelaBebidas() {
+            return (
+                <table id="tabela">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Marca</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cachaças.map((cachaça, index) => (
+                            <tr key={index}>
+                                <td>{cachaça.nome}</td>
+                                <td>{cachaça.marca}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            );
+        }
+
+        // Função principal para renderizar o cabeçalho e o botão
+        function App() {
+            // Função para renderizar a tabela ao clicar no botão
+            function mostrarTabela() {
+                ReactDOM.render(
+                    <div>
+                        <Cabecalho />
+                        <TabelaBebidas />
+                    </div>,
+                    document.getElementById("app")
+                );
+            }
+
+            return (
+                <div>
+                    <Cabecalho />
+                    <button onClick={mostrarTabela}>Mostrar Tabela</button>
+                </div>
+            );
+        }
+
+        // Renderiza apenas o cabeçalho e o botão inicialmente
+        ReactDOM.createRoot(document.getElementById("app")).render(<App />);
     </script>
 </body>
 </html>
